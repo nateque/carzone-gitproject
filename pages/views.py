@@ -1,8 +1,15 @@
 from django.shortcuts import render
+from .models import Team
 
 # Create your views here.
 def home(request):
-    return render(request, 'pages/home.html')
+    teams = Team.objects.all()
+    
+    context = {
+        'teams':teams,
+    }
+    template_name = 'pages/home.html'
+    return render(request, template_name, context)
 
 def about(request):
     return render(request, 'pages/about.html')
