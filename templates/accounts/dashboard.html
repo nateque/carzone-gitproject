@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Dashboard | {{ user }} {% endblock title %}
+
+{% block content %}
+
+
+<!-- Sub banner start -->
+<div class="sub-banner overview-bgi">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>Dashboard</h1>
+            <ul class="breadcrumbs">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li class="active">{{ user.first_name }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Sub Banner end -->
+{% include 'includes/messages.html' %}
+<!--   Dashboard Start   -->
+
+<div class="container mt-50 mb-50">
+    <div class="main-title" style="text-align:left !important;">
+        <h1>Welcome <span>{{ user.first_name }}</span></h1>
+
+        {% if inquiries %}
+        <p>Here are the cars that you have inquired about</p>
+        {% else %}
+        <h4>No Inquiries made by you...</h4>
+        {% endif %}
+
+    </div>
+
+    {% if inquiries %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Car Name</th>
+                <th scope="col">Location</th>
+                <th scope="col">Date</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for inquiry in inquiries %}
+            <tr>
+                <th scope="row">{{ inquiry.id }}</th>
+                <td>{{ inquiry.car_title }}</td>
+                <td>{{ inquiry.city }}</td>
+                <td>{{ inquiry.create_date|date:"D, d M, Y" }}</td>
+                <td><a href="{% url 'car_detail' inquiry.car_id %}" class="btn btn-outline-dark">View Car</a></td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+    
+    {% endif %}
+
+</div>
+
+<!--   Dashboard End   -->
+
+
+{% endblock content %}
